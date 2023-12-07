@@ -1,0 +1,128 @@
+<!-- index.phtml -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Morson Group</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=iso-8859-2" http-equiv="Content-Type">
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+
+        .container-fluid {
+            padding: 0; /* Remove padding to make it full width */
+        }
+
+        .carousel-inner {
+            width: 100%;
+            height: 100vh; /* Set the height of the carousel */
+        }
+
+        .carousel-item {
+            display: none;
+            width: 100%;
+            height: 100vh; /* Set the height of the carousel item to the full viewport height */
+            background-size: cover;
+            background-position: center; /* Center the background image */
+        }
+
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+            height: 100%;
+            min-height: 100vh; /* Set the minimum height of the main content to the full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .news-section {
+            background-color: #343a40; /* Dark background color for the news section */
+            padding: 20px;
+            margin-top: 20px;
+            color: #ffc107; /* Text color for news section */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10%;
+        }
+
+        .news-section a {
+            display: block; /* Make the link fill the container */
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container-fluid text-white">
+        <div class="carousel-inner">
+
+            <?php
+            $slides = [
+                ['background' => 'images/business.jpg', 'content' => 'business.php'],
+                ['background' => 'images/Health And Safety.png', 'content' => 'healthAndSafety.php'],
+                ['background' => 'images/business1.jpg', 'content' => 'itSystem.php'],
+                ['background' => 'images/Untitled design.png', 'content' => 'commercial.php'],
+                ['background' => 'images/Morson Group.png', 'content' => 'hr.php']
+            ];
+
+            $firstSlide = true;
+            foreach ($slides as $index => $slide) {
+                echo '<div class="carousel-item ';
+                echo $firstSlide ? 'active' : '';
+                echo '" style="background-image: url(\'';
+                echo $slide['background'];
+                echo '\');">';
+                echo '<div class="main-content">';
+                echo '<p class="font-weight-bold">';
+                require($slide['content']);
+                echo '</p>';
+                echo '</div>';
+                echo '</div>';
+                $firstSlide = false;
+            }
+            ?>
+
+        </div>
+        <p><?php require("footer.phtml"); ?></p>
+    </div>
+</div>
+
+
+
+<?php require_once("Views/footer.phtml"); ?>
+
+<!-- Include Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("carousel-item");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {
+            myIndex = 1;
+        }
+        x[myIndex - 1].style.display = "block";
+        setTimeout(carousel, 10000); // Change slide every 10 seconds
+    }
+</script>
+
+</body>
+
+</html>
