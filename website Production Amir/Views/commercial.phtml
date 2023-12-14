@@ -1,0 +1,35 @@
+<div class="container text-center">
+    <h1 class="display-4 text-center">COMMERCIAL DEPARTMENT</h1>
+
+    <div class="row">
+        <?php foreach ($view->commercial as $commercialData): ?>
+            <div class="col-md-3">
+                <h3 class="font-weight-bold">Month</h3>
+                <?php
+                try {
+                    $date = new DateTime($commercialData->getMonth());
+                    $formattedMonth = $date->format('F');
+                    echo '<p class="display-3 text-primary">' . $formattedMonth . '</p>';
+                } catch (Exception $e) {
+                    echo '<p class="display-3 text-danger">Month not found</p>';
+                }
+                ?>
+            </div>
+
+            <div class="col-md-3">
+                <h3 class="font-weight-bold">What is Payday?</h3>
+                    <?php echo '<p class=" text-primary">' .$commercialData->getPayday(). '</p>'; ?>
+            </div>
+
+            <div class="col-md-3">
+                <h3 class="font-weight-bold">Payroll Bulletins</h3>
+                <?php echo '<p class="text-primary">' .$commercialData->getPayrollBulletin(). '</p>'; ?>
+            </div>
+
+            <div class="col-md-3">
+                <h3 class="font-weight-bold">Best Performing Projects</h3>
+                <?php echo '<p class=" text-primary">' .$commercialData->getPerformance(). '</p>'; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>

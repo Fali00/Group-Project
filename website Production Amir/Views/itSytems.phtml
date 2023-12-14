@@ -1,0 +1,31 @@
+<!-- hr.phtml -->
+<div class="container text-center">
+    <h1 class="bg-info text-center">INFORMATION TECHNOLOGY DEPARTMENT</h1>
+        <div class="row">
+            <div class="col-md-3">
+                <h3 class="font-weight-bold">Month</h3>
+                <?php foreach ($view->maintenance as $maintenance){
+                    try {
+                        $date = new DateTime($maintenance->getMonth());
+                        $formattedMonth = $date->format('F');
+                        echo '<p class="display-3 text-primary">' . $formattedMonth . '</p>';
+                    } catch (Exception $e) {
+                        echo '<p class="display-3 text-danger">Month not found</p>';
+                    }
+                }
+
+                ?>
+            </div>
+            <div class="col-md-4">
+                <h3 class="font-weight-bold">System Status</h3>
+                <?php foreach ($view->software as $software){echo '<p class=" text-primary">' .$software->getBuildStatus(). '</p>';} ?>
+            </div>
+            <div class="col-md-4">
+                <h3 class="font-weight-bold">Build Status</h3>
+                <?php foreach ($view->systemStatus as $systemStatus)echo '<p class="text-primary">' . $systemStatus->getStatus(). '</p>'; ?>
+            </div>
+
+
+        </div>
+
+</div>
