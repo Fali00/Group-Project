@@ -1,0 +1,74 @@
+<!-- liveNews.phtml -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Morson Group</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=iso-8859-2" http-equiv="Content-Type">
+    <style>
+        .scrolling-content {
+            white-space: nowrap;
+            overflow: hidden;
+            animation: marquee 50s linear infinite;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="liveNewsFrame">
+    <div id="icon" style="cursor: pointer;" onclick="redirectToHome()">
+        <img src="images/icon.png" alt="Live News Icon">
+    </div>
+<marquee>
+    <div id="slug" class="scrolling-content">
+    </div>
+</marquee>
+</div>
+
+</body>
+<script>
+    function redirectToHome() {
+// Perform any actions you want here
+// For example, redirect to the home page
+        window.location.href = 'home.php';
+    }
+    const urls = [
+        'https://www.morson-projects.co.uk/wp-json/wp/v2/posts/?filter[tag]=appcontent&per_page=3',
+        'https://www.waldeckconsulting.com/wp-json/wp/v2/posts/?filter[tag]=appcontent&per_page=3'
+    ];
+
+    async function fetchNew() {
+        for (const url of urls) {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            // Handle the data as needed (adjust this part based on the structure of your API response)
+            for (const { slug } of data) {
+                // Convert the slug to uppercase, replace dashes with spaces, and add spaces between words
+                const modifiedSlug = slug.toUpperCase().replace(/-/g, ' ').split(' ').join(' ');
+
+                const slugElement = document.createElement('p');
+                slugElement.textContent = modifiedSlug;
+
+                document.getElementById('slug').appendChild(slugElement);
+                // Break out of the loop after processing the first item
+                break;
+            }
+
+        }
+    }
+
+    fetchNew();
+</script>
+
+</html>
